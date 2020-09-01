@@ -64,8 +64,8 @@ class Texture(object):
 
     def getColor(self, tx, ty):
         if tx >= 0 and tx <= 1 and ty >= 0 and ty <= 1:
-            x = int(tx * self.width - 1)
-            y = int(ty * self.height - 1)
+            x = int(tx * self.width )
+            y = int(ty * self.height )
 
             return self.pixels[y][x]
         else:

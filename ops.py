@@ -50,24 +50,26 @@ def det(a):
         return a[0][0] * a[1][1] * a[2][2] + a[0][1] * a[1][2] * a[2][0] + a[0][2] * a[1][0] * a[2][1] \
                - a[0][0] * a[1][2] * a[2][1] - a[0][1] * a[1][0] * a[2][2] - a[0][2] * a[1][1] * a[2][0]
     else:
-        res = [pow(-1, x) * arr[0][x] for x in range(len(arr))]
-        for y in range(alen):
-            tarr = []
-            for z in range(len(arr)):
+        mow = [pow(-1, x) * a[0][x] for x in range(len(a))]
+        for y in range(size):
+            grant = []
+            for z in range(len(a)):
                 if z != 0:
                     filarr = []
-                    for w in range(len(arr)):
+                    for w in range(len(a)):
                         if w != y:
-                            filarr.append(arr[z][w])
-                    tarr.append(filarr)
-            res[y] *= mdet(tarr)
-        return sum(res)
+                            filarr.append(a[z][w])
+                    grant.append(filarr)
+            mow[y] *= det(grant)
+        return sum(mow)
 
 def mtxmul(a,b):
+    
     if type(a) != list:
         return [a * b[i] for i in range(len(b))]
 
-    matrix = [[0 for x in range(len(b[0]))] for j in range(len(a))]
+    matrix = [[0 for x in range(4)] for j in range(len(a))]
+    
     for each in a:
         if len(each) != len(b):
             raise Exception

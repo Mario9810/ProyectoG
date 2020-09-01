@@ -1,4 +1,4 @@
-from gl import *
+from gr import *
 
 def flat(render, **kwargs):
     A, B, C = kwargs['verts']
@@ -11,17 +11,17 @@ def flat(render, **kwargs):
     r /= 255
 
     if render.active_texture:
-        tx = ta.x * u + tb.x * v + tc.x * w
-        ty = ta.y * u + tb.y * v + tc.y * w
+        tx = ta[0] * u + tb[0] * v + tc[0] * w
+        ty = ta[1] * u + tb[1] * v + tc[1] * w
         texColor = render.active_texture.getColor(tx,ty)
         b *= texColor[0] / 255
         g *= texColor[1] / 255
         r *= texColor[2] / 255
 
     
-    normal = np.cross(np.subtract(B, A), np.subtract(C, A))
-    normal = normal / np.linalg.norm(normal)
-    intensity = np.dot(normal, render.light)
+    normal = op.cross(op.subtract(B, A), op.subtract(C, A))
+    normal = op.divide(normal , op.norm(normal))
+    intensity = op.dot(normal, render.light)
 
     b *= intensity
     g *= intensity
@@ -42,8 +42,8 @@ def unlit(render, **kwargs):
     r /= 255
 
     if render.active_texture:
-        tx = ta.x * u + tb.x * v + tc.x * w
-        ty = ta.y * u + tb.y * v + tc.y * w
+        tx = ta[0] * u + tb[0] * v + tc[0] * w
+        ty = ta[1] * u + tb[1] * v + tc[1] * w
         texColor = render.active_texture.getColor(tx,ty)
         b *= texColor[0] / 255
         g *= texColor[1] / 255
@@ -62,8 +62,8 @@ def gourad(render, **kwargs):
     r /= 255
 
     if render.active_texture:
-        tx = ta.x * u + tb.x * v + tc.x * w
-        ty = ta.y * u + tb.y * v + tc.y * w
+        tx = ta[0] * u + tb[0] * v + tc[0] * w
+        ty = ta[1] * u + tb[1] * v + tc[1] * w
         texColor = render.active_texture.getColor(tx, ty)
         b *= texColor[0] / 255
         g *= texColor[1] / 255
@@ -73,9 +73,9 @@ def gourad(render, **kwargs):
     ny = na[1] * u + nb[1] * v + nc[1] * w
     nz = na[2] * u + nb[2] * v + nc[2] * w
 
-    normal = V3(nx, ny, nz)
+    normal = (nx, ny, nz)
 
-    intensity = np.dot(normal, render.light)
+    intensity = op.dot(normal, render.light)
 
     b *= intensity
     g *= intensity
@@ -97,8 +97,8 @@ def sombreadoCool(render, **kwargs):
     r /= 255
 
     if render.active_texture:
-        tx = ta.x * u + tb.x * v + tc.x * w
-        ty = ta.y * u + tb.y * v + tc.y * w
+        tx = ta[0] * u + tb[0] * v + tc[0] * w
+        ty = ta[1] * u + tb[1] * v + tc[1] * w
         texColor = render.active_texture.getColor(tx, ty)
         b *= texColor[0] / 255
         g *= texColor[1] / 255
@@ -108,9 +108,9 @@ def sombreadoCool(render, **kwargs):
     ny = na[1] * u + nb[1] * v + nc[1] * w
     nz = na[2] * u + nb[2] * v + nc[2] * w
 
-    normal = V3(nx, ny, nz)
+    normal = (nx, ny, nz)
 
-    intensity = np.dot(normal, render.light)
+    intensity = op.dot(normal, render.light)
     if intensity < 0:
         intensity = 0
 
@@ -140,8 +140,8 @@ def toon(render, **kwargs):
     nx = na[0] * u + nb[0] * v + nc[0] * w
     ny = na[1] * u + nb[1] * v + nc[1] * w
     nz = na[2] * u + nb[2] * v + nc[2] * w
-    normal = V3(nx,ny,nz)
-    intensity = np.dot(normal, render.light)
+    normal = (nx,ny,nz)
+    intensity = op.dot(normal, render.light)
 
     if (intensity>0.85):
         intensity = 1
